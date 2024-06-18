@@ -4,9 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "ts": "tsc",
+    "dev": "nodemon --watch src --ext ts,scss --exec \"npm run build\"",
+    "build": "node .scripts/build.js",
+    "minify:js": "node .scripts/utils/minifier.js",
+    "format": "prettier --write dist/index.js",
+    "exemples": "http-server examples -p 4000",
+    "docs": "docsify serve docs",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "uglify-js": "^3.17.4"
+  },
+  "devDependencies": {
+    "node-sass": "^9.0.0",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.3",
+    "husky": "^9.0.11"
+  }
 }
