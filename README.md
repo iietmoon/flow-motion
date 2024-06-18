@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-Flow Motion is a modern animation library designed to create smooth, dynamic web animations with ease. Whether you're a beginner or an experienced developer, Flow Motion simplifies the process of adding engaging animations to your web projects.
+Flow Motion is a modern animation library designed to create smooth, dynamic web animations with ease. Whether you're a beginner or an experienced developer, Flow Motion simplifies the process of adding engaging animations.
 </p>
 
 ## Features ✨
