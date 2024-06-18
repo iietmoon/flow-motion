@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://otha.works/simple-captcha">
-    <img src="/.github/ressources/flow-motion-github.png" alt="Flow Motion" width="225px">
+    <img src="/.github/ressources/flow-motion-github.png" alt="Flow Motion" width="325px">
   </a>
 </p>
 
