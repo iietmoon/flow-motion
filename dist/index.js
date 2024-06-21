@@ -1,3 +1,3 @@
 const FlowMotion = (arg) => {
-  return arg;
+    return arg;
 };

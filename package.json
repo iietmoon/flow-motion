@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "ts": "tsc",
-    "dev": "nodemon --watch src --ext ts,scss --exec \"npm run build\"",
+    "dev": "nodemon --watch src --ext ts, --exec \"npm run build\"",
     "build": "node .scripts/build.js",
     "minify:js": "node .scripts/utils/minifier.js",
     "format": "prettier --write dist/index.js",
@@ -17,13 +17,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "next": "^14.2.4",
+    "nextra": "^2.13.4",
+    "nextra-theme-docs": "^2.13.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "uglify-js": "^3.17.4"
   },
   "devDependencies": {
+    "husky": "^9.0.11",
     "node-sass": "^9.0.0",
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.3",
-    "husky": "^9.0.11"
+    "typescript": "^5.4.3"
   }
 }

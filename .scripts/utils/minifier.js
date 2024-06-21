@@ -5,6 +5,6 @@ const code = fs.readFileSync('dist/index.js', 'utf8');
 
 const result = uglify.minify(code);
 
-fs.writeFileSync('dist/index.min.js', result.code);
+fs.writeFileSync('Flow Motion', result.code);
 
 console.log('✅ JS Minified.');

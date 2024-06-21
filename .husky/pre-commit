@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 git add .
-npm run build
-npm run format
-git add .
+#npm run build
+#npm run format
+#git add .
