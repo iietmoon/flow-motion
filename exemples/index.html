@@ -8,18 +8,18 @@
 </head>
 <body>
     <h1>Flow Motion Example</h1>
-    
-    <div id="myElement" style="width: 100px; height: 100px; background-color: blue;"></div>
+    <div id="div" style="width: 100px; height: 100px;"></div>
 
     <script>
         FlowMotion.animate({
-            element: '#myElement',
+            element: 'h1',
             properties: [
-                { property: 'background-color', from: 'red', to: 'green' },
-                { property: 'width', from: 100, to: 300 }
+                { property: 'transform', from: 'translateY(10px)', to: 'translateX(0px)' },
+                { property: 'opacity', from: 0, to: 1 },
             ],
-            duration: 500,
-            easing: 'easeInOut',
+            duration: 1000,
+            easing: 'fade',
+            trigger: 'hover'
         });
     </script>
 </body>
