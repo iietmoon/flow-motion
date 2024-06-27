@@ -1,7 +1,7 @@
 const fs = require('fs');
 const uglify = require('uglify-js');
 
-const code = fs.readFileSync('dist/index.js', 'utf8');
+const code = fs.readFileSync('dist/flow-motion.js', 'utf8');
 
 const result = uglify.minify(code);
 

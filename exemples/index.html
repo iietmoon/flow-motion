@@ -3,9 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flow Motion</title>
+    <title>Flow Motion Example</title>
+    <script src="../dist/flow-motion.js"></script>
 </head>
 <body>
-    <h1>this is simple Flow Motion exemples</h1>
+    <h1>Flow Motion Example</h1>
+    
+    <div id="myElement" style="width: 100px; height: 100px; background-color: blue;"></div>
+
+    <script>
+        FlowMotion.animate({
+            element: '#myElement',
+            properties: [
+                { property: 'background-color', from: 'red', to: 'green' },
+                { property: 'width', from: 100, to: 300 }
+            ],
+            duration: 500,
+            easing: 'easeInOut',
+        });
+    </script>
 </body>
 </html>

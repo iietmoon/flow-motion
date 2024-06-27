@@ -1,8 +1,13 @@
 {
-    "compilerOptions": {
-      "target": "es6",
-      "module": "es6",
-      "outDir": "dist/",
-    },
-    "include": ["src/**/*.ts"]
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es6", // or "commonjs" if you're using Node.js or require() style imports
+    "lib": ["dom", "es2015"],
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node"
+  },
+  "include": ["src"]
 }
