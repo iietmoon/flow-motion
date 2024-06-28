@@ -1,28 +1,36 @@
 type CSSProperty =
-  | 'opacity'
-  | 'visibility'
-  | 'display'
-  | 'transform'
-  | 'filter'
-  | 'background-color'
-  | 'color'
-  | 'width'
-  | 'height'
-  | 'margin'
-  | 'padding'
-  | 'border-width'
-  | 'border-color'
-  | 'border-radius'
-  | 'outline-width'
-  | 'outline-color'
-  | 'outline-offset';
+  | "opacity"
+  | "visibility"
+  | "display"
+  | "transform"
+  | "filter"
+  | "background-color"
+  | "color"
+  | "width"
+  | "height"
+  | "margin"
+  | "padding"
+  | "border-width"
+  | "border-color"
+  | "border-radius"
+  | "outline-width"
+  | "outline-color"
+  | "outline-offset"
+  | "clip-path";
 
-type TriggerOption = 'scroll' | 'entrance' | 'hover' | 'click' | 'focus' | 'visible';
+type TriggerOption =
+  | "scroll"
+  | "entrance"
+  | "hover"
+  | "click"
+  | "focus"
+  | "visible";
 
 interface PropertyOptions {
   property: CSSProperty;
   from: number | string;
   to: number | string;
+  delay?: number;
 }
 
 interface AnimationOptions {
@@ -43,7 +51,7 @@ interface ErrorResponse {
 }
 
 function logError(message: string, error?: any): void {
-  console.error('An error occurred:', error);
+  console.error("An error occurred:", error);
 }
 
 function createErrorResponse(message: string, error?: any): ErrorResponse {
@@ -53,15 +61,28 @@ function createErrorResponse(message: string, error?: any): ErrorResponse {
   };
 }
 
-function applyAnimationStyles(elm: HTMLElement | any, property: CSSProperty, from: number | string, to: number | string, duration: number, easing: string): void {
-  elm.style[property] = from as string;
+function applyAnimationStyles(
+  elm: HTMLElement,
+  property: CSSProperty,
+  from: number | string,
+  to: number | string,
+  duration: number,
+  easing: string
+): void {
+  (elm.style[property as any] as string) = from as string;
   elm.style.transition = `${duration}ms`;
   setTimeout(() => {
-    elm.style[property] = to as string;
+    (elm.style[property as any] as string) = to as string;
   }, duration);
 }
 
-function animateElements({ element, properties, duration, easing, trigger }: AnimationOptions): ErrorResponse | void {
+function animateElements({
+  element,
+  properties,
+  duration,
+  easing,
+  trigger,
+}: AnimationOptions): ErrorResponse | void {
   const elements = document.querySelectorAll<HTMLElement>(element);
   if (elements.length === 0) {
     const errorMessage = "No elements found for the provided selector.";
@@ -70,8 +91,10 @@ function animateElements({ element, properties, duration, easing, trigger }: Ani
   }
 
   elements.forEach((elm) => {
-    properties.forEach(({ property, from, to }) => {
-      applyAnimationStyles(elm, property, from, to, duration, easing);
+    properties.forEach(({ property, from, to, delay = 0 }) => {
+      setTimeout(function(){
+        applyAnimationStyles(elm, property, from, to, duration, easing);
+      }, delay)
     });
   });
 }
@@ -79,3 +102,7 @@ function animateElements({ element, properties, duration, easing, trigger }: Ani
 const FlowMotion = {
   animate: animateElements,
 };
+
+(() => {
+  (window as any).FlowMotion = FlowMotion;
+})();

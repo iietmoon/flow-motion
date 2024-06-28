@@ -3,7 +3,7 @@ function interpolate() {
     return null;
 }
 function logError(message, error) {
-    console.error('An error occurred:', error);
+    console.error("An error occurred:", error);
 }
 function createErrorResponse(message, error) {
     return {
@@ -28,11 +28,16 @@ function animateElements(_a) {
     }
     elements.forEach(function (elm) {
         properties.forEach(function (_a) {
-            var property = _a.property, from = _a.from, to = _a.to;
-            applyAnimationStyles(elm, property, from, to, duration, easing);
+            var property = _a.property, from = _a.from, to = _a.to, _b = _a.delay, delay = _b === void 0 ? 0 : _b;
+            setTimeout(function () {
+                applyAnimationStyles(elm, property, from, to, duration, easing);
+            }, delay);
         });
     });
 }
 var FlowMotion = {
     animate: animateElements,
 };
+(function () {
+    window.FlowMotion = FlowMotion;
+})();
