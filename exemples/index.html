@@ -51,12 +51,10 @@
         FlowMotion.animate({
             element: 'h1',
             properties: [
-                { property: 'letter-spacing', from: "10px", to: "10px", delay: 0},
-                { property: 'transform', from: "translateY(50px)", to: "translateY(0)", delay: 50},
-                { property: 'opacity', from: 0, to: 1, delay: 50},
+                { property: 'opacity', from: 0, to: 1},
             ],
             duration: 1000,
-            easing: 'ease-in',
+            easing: 'easeInOut',
             trigger: 'visible'
         });
     </script>
