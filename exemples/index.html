@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <div class="exemples">
-            <div class="ball"></div>
+            <h1>Animate it with ease</h1>
         </div>
     </div>
     <style>
@@ -22,7 +22,7 @@
         body{
             padding: 0;
             margin: 0;
-            
+            min-height: 200vh;
         }
         body .container{
             font-size: 'Open Sans';
@@ -49,14 +49,15 @@
     </style>
     <script>
         FlowMotion.animate({
-            element: '.ball',
+            element: 'h1',
             properties: [
-                {property: 'width', from: "25px", to: "100px", delay: 0},
-                {property: 'height', from: "25px", to: "100px", delay: 1000},
+                { property: 'letter-spacing', from: "10px", to: "10px", delay: 0},
+                { property: 'transform', from: "translateY(50px)", to: "translateY(0)", delay: 50},
+                { property: 'opacity', from: 0, to: 1, delay: 50},
             ],
-            duration: 500,
+            duration: 1000,
             easing: 'ease-in',
-            trigger: 'hover'
+            trigger: 'visible'
         });
     </script>
 </body>

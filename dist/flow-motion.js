@@ -8,19 +8,98 @@ function createErrorResponse(message, error) {
         error: error,
     };
 }
-function applyAnimation(elm, property, from, to, duration, easing) {
+function applyCSSAnimation(elm, property, from, to, duration, easing) {
     elm.style[property] = from;
     elm.style.transition = "".concat(duration, "ms ").concat(easing, " ").concat(property);
     setTimeout(function () {
         elm.style[property] = to;
     }, duration);
 }
-function revertAnimation(elm, property, from, to, duration, easing) {
+function revertCSSAnimation(elm, property, from, to, duration, easing) {
     elm.style[property] = to;
     elm.style.transition = "".concat(duration, "ms ").concat(easing, " ").concat(property);
     setTimeout(function () {
         elm.style[property] = from;
     }, duration);
+}
+function attachHoverListeners(elements, properties, duration, easing) {
+    elements.forEach(function (element) {
+        properties.forEach(function (_a) {
+            var property = _a.property, from = _a.from, to = _a.to, _b = _a.delay, delay = _b === void 0 ? 0 : _b;
+            setTimeout(function () {
+                element.addEventListener("mouseover", function () {
+                    applyCSSAnimation(element, property, from, to, duration, easing);
+                });
+                element.addEventListener("mouseleave", function () {
+                    revertCSSAnimation(element, property, from, to, duration, easing);
+                });
+            }, delay);
+        });
+    });
+}
+function attachScrollListeners(elements, properties, duration, easing) {
+    elements.forEach(function (element) {
+        window.addEventListener("scroll", function () {
+            var rect = element.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                properties.forEach(function (_a) {
+                    var property = _a.property, from = _a.from, to = _a.to, _b = _a.delay, delay = _b === void 0 ? 0 : _b;
+                    setTimeout(function () {
+                        applyCSSAnimation(element, property, from, to, duration, easing);
+                    }, delay);
+                });
+            }
+        });
+    });
+}
+function attachClickListeners(elements, properties, duration, easing) {
+    elements.forEach(function (element) {
+        element.addEventListener("click", function () {
+            properties.forEach(function (_a) {
+                var property = _a.property, from = _a.from, to = _a.to, _b = _a.delay, delay = _b === void 0 ? 0 : _b;
+                setTimeout(function () {
+                    applyCSSAnimation(element, property, from, to, duration, easing);
+                }, delay);
+            });
+        });
+    });
+}
+function attachFocusListeners(elements, properties, duration, easing) {
+    elements.forEach(function (element) {
+        element.addEventListener("focus", function () {
+            properties.forEach(function (_a) {
+                var property = _a.property, from = _a.from, to = _a.to, _b = _a.delay, delay = _b === void 0 ? 0 : _b;
+                setTimeout(function () {
+                    applyCSSAnimation(element, property, from, to, duration, easing);
+                }, delay);
+            });
+        });
+        element.addEventListener("blur", function () {
+            properties.forEach(function (_a) {
+                var property = _a.property, from = _a.from, to = _a.to, _b = _a.delay, delay = _b === void 0 ? 0 : _b;
+                setTimeout(function () {
+                    revertCSSAnimation(element, property, from, to, duration, easing);
+                }, delay);
+            });
+        });
+    });
+}
+function attachVisibleListeners(elements, properties, duration, easing) {
+    var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                properties.forEach(function (_a) {
+                    var property = _a.property, from = _a.from, to = _a.to, _b = _a.delay, delay = _b === void 0 ? 0 : _b;
+                    setTimeout(function () {
+                        applyCSSAnimation(entry.target, property, from, to, duration, easing);
+                    }, delay);
+                });
+            }
+        });
+    });
+    elements.forEach(function (element) {
+        observer.observe(element);
+    });
 }
 function animateElements(_a) {
     var element = _a.element, properties = _a.properties, duration = _a.duration, easing = _a.easing, trigger = _a.trigger;
@@ -30,30 +109,27 @@ function animateElements(_a) {
         logError(errorMessage);
         return createErrorResponse(errorMessage);
     }
-    if (trigger === 'hover') {
-        elements.forEach(function (element) {
-            properties.forEach(function (_a) {
-                var property = _a.property, from = _a.from, to = _a.to, _b = _a.delay, delay = _b === void 0 ? 0 : _b;
-                setTimeout(function () {
-                    element.addEventListener("mouseover", function (event) {
-                        applyAnimation(element, property, from, to, duration, easing);
-                    });
-                    element.addEventListener("mouseleave", function (event) {
-                        revertAnimation(element, property, from, to, duration, easing);
-                    });
-                }, delay);
-            });
-        });
+    switch (trigger) {
+        case "hover":
+            attachHoverListeners(elements, properties, duration, easing);
+            break;
+        case "scroll":
+            attachScrollListeners(elements, properties, duration, easing);
+            break;
+        case "click":
+            attachClickListeners(elements, properties, duration, easing);
+            break;
+        case "focus":
+            attachFocusListeners(elements, properties, duration, easing);
+            break;
+        case "visible":
+            attachVisibleListeners(elements, properties, duration, easing);
+            break;
+        default:
+            var errorMessage = "Trigger \"".concat(trigger, "\" not implemented.");
+            logError(errorMessage);
+            return createErrorResponse(errorMessage);
     }
-    /*
-    elements.forEach((elm) => {
-      properties.forEach(({ property, from, to, delay = 0 }) => {
-        setTimeout(function () {
-          applyAnimation(elm, property, from, to, duration, easing);
-        }, delay);
-      });
-    });
-    */
 }
 var FlowMotion = {
     animate: animateElements,
