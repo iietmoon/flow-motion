@@ -41,10 +41,6 @@ interface AnimationOptions {
   trigger: TriggerOption;
 }
 
-function interpolate() {
-  return null;
-}
-
 interface ErrorResponse {
   message: string;
   error?: any;
@@ -61,7 +57,7 @@ function createErrorResponse(message: string, error?: any): ErrorResponse {
   };
 }
 
-function applyAnimationStyles(
+function applyAnimation(
   elm: HTMLElement,
   property: CSSProperty,
   from: number | string,
@@ -70,9 +66,23 @@ function applyAnimationStyles(
   easing: string
 ): void {
   (elm.style[property as any] as string) = from as string;
-  elm.style.transition = `${duration}ms`;
+  elm.style.transition = `${duration}ms ${easing} ${property}`;
   setTimeout(() => {
     (elm.style[property as any] as string) = to as string;
+  }, duration);
+}
+function revertAnimation(
+  elm: HTMLElement,
+  property: CSSProperty,
+  from: number | string,
+  to: number | string,
+  duration: number,
+  easing: string
+): void {
+  (elm.style[property as any] as string) = to as string;
+  elm.style.transition = `${duration}ms ${easing} ${property}`;
+  setTimeout(() => {
+    (elm.style[property as any] as string) = from as string;
   }, duration);
 }
 
@@ -89,14 +99,31 @@ function animateElements({
     logError(errorMessage);
     return createErrorResponse(errorMessage);
   }
-
+  if(trigger === 'hover'){
+    elements.forEach((element)=>{
+      properties.forEach(({ property, from, to, delay = 0 }) => {
+        setTimeout(function () {
+          element.addEventListener("mouseover", (event) => {
+            applyAnimation(element, property, from, to, duration, easing);
+          });
+          element.addEventListener("mouseleave", (event) => {
+            revertAnimation(element, property, from, to, duration, easing);
+          });
+          
+        }, delay);
+      });
+      
+    })
+  }
+  /*
   elements.forEach((elm) => {
     properties.forEach(({ property, from, to, delay = 0 }) => {
-      setTimeout(function(){
-        applyAnimationStyles(elm, property, from, to, duration, easing);
-      }, delay)
+      setTimeout(function () {
+        applyAnimation(elm, property, from, to, duration, easing);
+      }, delay);
     });
   });
+  */
 }
 
 const FlowMotion = {

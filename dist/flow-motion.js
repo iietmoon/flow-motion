@@ -1,7 +1,4 @@
 "use strict";
-function interpolate() {
-    return null;
-}
 function logError(message, error) {
     console.error("An error occurred:", error);
 }
@@ -11,11 +8,18 @@ function createErrorResponse(message, error) {
         error: error,
     };
 }
-function applyAnimationStyles(elm, property, from, to, duration, easing) {
+function applyAnimation(elm, property, from, to, duration, easing) {
     elm.style[property] = from;
-    elm.style.transition = "".concat(duration, "ms");
+    elm.style.transition = "".concat(duration, "ms ").concat(easing, " ").concat(property);
     setTimeout(function () {
         elm.style[property] = to;
+    }, duration);
+}
+function revertAnimation(elm, property, from, to, duration, easing) {
+    elm.style[property] = to;
+    elm.style.transition = "".concat(duration, "ms ").concat(easing, " ").concat(property);
+    setTimeout(function () {
+        elm.style[property] = from;
     }, duration);
 }
 function animateElements(_a) {
@@ -26,14 +30,30 @@ function animateElements(_a) {
         logError(errorMessage);
         return createErrorResponse(errorMessage);
     }
-    elements.forEach(function (elm) {
-        properties.forEach(function (_a) {
-            var property = _a.property, from = _a.from, to = _a.to, _b = _a.delay, delay = _b === void 0 ? 0 : _b;
-            setTimeout(function () {
-                applyAnimationStyles(elm, property, from, to, duration, easing);
-            }, delay);
+    if (trigger === 'hover') {
+        elements.forEach(function (element) {
+            properties.forEach(function (_a) {
+                var property = _a.property, from = _a.from, to = _a.to, _b = _a.delay, delay = _b === void 0 ? 0 : _b;
+                setTimeout(function () {
+                    element.addEventListener("mouseover", function (event) {
+                        applyAnimation(element, property, from, to, duration, easing);
+                    });
+                    element.addEventListener("mouseleave", function (event) {
+                        revertAnimation(element, property, from, to, duration, easing);
+                    });
+                }, delay);
+            });
         });
+    }
+    /*
+    elements.forEach((elm) => {
+      properties.forEach(({ property, from, to, delay = 0 }) => {
+        setTimeout(function () {
+          applyAnimation(elm, property, from, to, duration, easing);
+        }, delay);
+      });
     });
+    */
 }
 var FlowMotion = {
     animate: animateElements,

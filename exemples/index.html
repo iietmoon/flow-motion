@@ -16,6 +16,9 @@
         </div>
     </div>
     <style>
+        h1{
+            color: white;
+        }
         body{
             padding: 0;
             margin: 0;
@@ -39,7 +42,8 @@
         }
         body .container .ball{
             background-color: white;
-            height: 5px;
+            height: 25px;
+            width: 25px;
         }
         
     </style>
@@ -47,16 +51,11 @@
         FlowMotion.animate({
             element: '.ball',
             properties: [
-                {property: 'width', from: '0px', to: "50px", delay: 500},
-                {property: 'height', from: '5px', to: "50px", delay: 1000},
-                {property: 'transform', from: 'rotate(0deg)', to: "rotate(180deg)", delay: 2000},
-                {property: 'border-radius', from: '0', to: '50px', delay: 3000},
-                {property: 'height', from: '50px', to: "100vh", delay: 4000},
-                {property: 'width', from: '50px', to: "100vw", delay: 5000},
-                {property: 'border-radius', from: '50px', to: '0px', delay: 5000},
+                {property: 'width', from: "25px", to: "100px", delay: 0},
+                {property: 'height', from: "25px", to: "100px", delay: 1000},
             ],
-            duration: 1000,
-            easing: 'fade',
+            duration: 500,
+            easing: 'ease-in',
             trigger: 'hover'
         });
     </script>
